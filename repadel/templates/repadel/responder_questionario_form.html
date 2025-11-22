@@ -1,0 +1,47 @@
+{% extends 'core/base.html' %}
+{% load bootstrap3 %}
+
+{% block actions %}
+{% endblock %}
+
+{% block title %}
+	{% bootstrap_icon 'info-sign' %} Questionário: {{ questionario.titulo }}<br><br>
+{% endblock %}
+
+{% block content %}
+
+{% comment %} <h3>{{ questionario.descricao }}</h3>
+<h4>Categoria: {{ categoria_atual }}</h4> {% endcomment %}
+
+<form method="post">
+    {% csrf_token %}
+
+    <input type="hidden" name="page" value="{{ page }}">
+    
+    PÁGINA: {{ page }} / {{ total_pages }}
+
+    {% for pergunta in perguntas %}
+        <div style="margin-bottom:20px;">
+            {{ pergunta.texto }} | <strong>{{  pergunta.texto_exibido }}</strong>
+            
+            {% if pergunta.tipo == "MULTIPLA_ESCOLHA" %}
+                {% for alt in pergunta.pergunta.all %}
+                    <label style="display:block;">
+                        <input type="radio" name="pergunta_{{ pergunta.id }}" value="{{ alt.id }}" required>
+                        {{ alt.texto }}
+                    </label>
+                {% endfor %}
+            {% else %}
+                <input type="text" class="form-control" name="pergunta_{{ pergunta.id }}">
+            {% endif %}
+        </div>
+    {% endfor %}
+
+    {% if page < total_pages %}
+        <button type="submit" class="btn btn-warning">Próximo</button>
+    {% else %}
+        <button type="submit" class="btn btn-success">Enviar respostas</button>
+    {% endif %}
+</form>
+
+{% endblock %}

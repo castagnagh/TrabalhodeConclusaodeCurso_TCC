@@ -1,0 +1,25 @@
+{% extends 'core/base.html' %}
+{% load bootstrap3 %}
+
+{% block actions %}
+{% endblock %}
+
+{% block title %}
+	{% bootstrap_icon 'certificate' %} Resultado da Recomendação
+{% endblock %}
+
+{% block content %}
+
+    <p><strong>Atleta:</strong> {{ atleta.nome }}</p>
+    {% if autoavaliacao %}
+        <p><strong>Sua autoavaliação:</strong> {{ autoavaliacao }}</p>
+    {% endif %}
+    <p><strong>Categoria prevista pelo REPADEL:</strong> {{ categoria_prevista }}</p>
+
+
+    <!-- {% if detalhes %}
+        {% for classe, score in detalhes.items %}
+        <p><strong>{{ classe }}:</strong> {{ score|floatformat:2 }}</p>
+        {% endfor %}
+    {% endif %} -->
+{% endblock %}

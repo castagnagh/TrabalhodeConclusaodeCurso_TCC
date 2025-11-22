@@ -1,0 +1,33 @@
+{% extends 'appmembro/base.html' %}
+{% load bootstrap3 %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block content %}
+<h1 style="text-align: center;">ATESTADO DE PARTICIPAÇÃO</h1>
+<br>
+<br>
+<br>
+
+<p style="text-align: center;">
+    Atestamos, para os devidos fins, que o(a) participante <b>{{ object.participante.nome }}</b> esteve presente no evento <b>{{ object.evento.nome }}</b>, realizado no dia <b>{{ object.evento.data_inicio|date:"d/m/Y" }}</b>, com início às <b>{{ object.evento.hora_inicio|time:"H:i" }} h</b>, no(a) <b>{{ object.evento.local }}</b> do(a) <b>{{ object.evento.instituicao }}</b>.
+    <br>
+    O referido evento teve carga horária total de <b>{{ object.evento.carga_horaria }}</b> horas e foi promovido e coordenado pelo(a) <b>{{ object.evento.grupo }}</b>. O código de inscrição para validação do atestado é <b>{{ object.codigo_matricula }}</b>.
+</p>
+<br>
+<br>                                                                                                                                                         
+<p style="text-align: center;">
+    Santa Maria, {{ object.evento.data_inicio }}.
+</p>
+<br> 
+<br>
+<p style="text-align: center;">
+    <small>O atestado de participação é gerado automaticamente pelo Sistema de Gestão de Eventos (SGEUFN), 
+        no momento em que o participante confirma sua presença no evento. Para validar a autenticidade
+        deste atestado, utilize o código de inscrição fornecido acima no formulário de validação do SGEUFN. </small>
+</p>
+<hr>
+{% bootstrap_button content='Voltar' href="javascript:history.go(-1);" button_type='link' button_class='btn btn-warning' size='md' %}
+{% endblock %}

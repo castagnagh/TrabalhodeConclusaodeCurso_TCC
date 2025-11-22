@@ -1,0 +1,61 @@
+{% extends 'core/base.html' %}
+{% load bootstrap3 %}
+
+{% block title %}
+	{% bootstrap_icon 'question-sign' %} Pergunta
+{% endblock %}
+
+{% block content %}
+	<div class="panel panel-default">
+		<div class="panel-body">
+		<a href="{% url 'pergunta_create' %}" class="btn btn-lg btn-primary">{% bootstrap_icon 'floppy-disk' %} Cadastrar Pergunta</a>
+		</div>
+	</div>
+	<div class="table-responsive">
+		<table class="table table-hover">
+			<thead>			
+				<th>Categoria | Ordem</th>  			
+				<th>Texto</th>  			
+				<th>Tipo</th>
+				<th class="text-center">Ativa</th>
+                <th class="text-center">Alternativas</th>
+				<th class="text-center">Editar</th>
+				<th class="text-center">Excluir</th>
+			</thead>
+
+			<tbody>
+				{% for pergunta in object_list %}
+					<tr>
+						<td> {{ pergunta.categoria }} | {{ pergunta.ordem }} </td>
+						<td> 
+							{{ pergunta.texto_exibido }} <br>
+							<small>{{ pergunta.texto }}</small>
+						</td>
+						<td> {{ pergunta.get_tipo_display }}</td>
+						<td class="text-center">
+							{% if pergunta.is_active %}
+								SIM
+							{% else %}
+								NÃO
+							{% endif %}
+						</td>
+                        <td class="text-center">
+							{% bootstrap_button content='' href=pergunta.get_alternativas_list_url button_type='link' icon='list' button_class='btn btn-primary' size='sm' %}
+						</td>
+						<td class="text-center">
+							{% bootstrap_button content='' href=pergunta.get_absolute_url button_type='link' icon='edit' button_class='btn btn-primary' size='sm' %}
+						</td>
+						<td class="text-center">
+							{% bootstrap_button content='' href=pergunta.get_delete_url button_type='link' icon='trash' button_class='btn btn-danger' size='sm' %}
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+			<tfoot>
+				<th colspan="7">
+					Total de registros: {{ object_list|length }}
+				</th>
+			</tfoot>
+		</table>
+	</div>
+{% endblock %}
